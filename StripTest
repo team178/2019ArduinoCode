@@ -9,11 +9,11 @@
 //   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(23, 6, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(12, 6, NEO_GRB + NEO_KHZ800);
 
-int(pixelNumberRed) = 0;
-int(pixelNumberBlue) = 1;
-int(pixelNumberGreen) = 2;
+int(enforcerBlue) = 0;
+int(enforcerGold) = 1;
+int(green) = 2;
 
 void setup() {
   // put your setup code here, to run once:
@@ -24,40 +24,39 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  pixelNumberRed = pixelNumberRed;
-  pixelNumberBlue = pixelNumberBlue;
-  pixelNumberGreen = pixelNumberGreen;
+  enforcerBlue = enforcerBlue;
+  enforcerGold = enforcerGold;
+  green = green;
   
-  strip.setPixelColor(pixelNumberRed, 255, 0, 0);
-  strip.setPixelColor(pixelNumberBlue, 0, 255, 0);
-  strip.setPixelColor(pixelNumberGreen, 0, 0, 255);
+  strip.setPixelColor(enforcerBlue, 15,8,56);
+  strip.setPixelColor(enforcerGold, 255,208,0);
+  strip.setPixelColor(green, 0, 255, 0);
   strip.show();
   delay(500);
 
-  strip.setPixelColor(pixelNumberRed, 0,0,0);
-  strip.setPixelColor(pixelNumberBlue, 0,0,0);
-  strip.setPixelColor(pixelNumberGreen, 0,0,0);
+  strip.setPixelColor(enforcerBlue, 0,0,0);
+  strip.setPixelColor(enforcerGold, 0,0,0);
+  strip.setPixelColor(green, 0,0,0);
 
-  pixelNumberRed = pixelNumberRed + 1;
-  pixelNumberBlue = pixelNumberBlue + 1;
-  pixelNumberGreen = pixelNumberGreen + 1;
+  enforcerBlue = enforcerBlue + 1;
+  enforcerGold = enforcerGold + 1;
+  green = green + 1;
 
-  if (pixelNumberRed == 23){
+  if (enforcerBlue == 12){
 
-    pixelNumberRed = 0;
+    enforcerBlue = 0;
   }
 
-  if (pixelNumberBlue == 23){
+  if (enforcerGold == 12){
 
-    pixelNumberBlue = 0;
+    enforcerGold = 0;
   }
 
-    if (pixelNumberGreen == 23){
+     if (green == 12){
 
-    pixelNumberGreen = 0;
+    green = 0;
   }
   
 }
-
 
 
