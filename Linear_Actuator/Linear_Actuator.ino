@@ -7,10 +7,11 @@ void setup()
 {
   linearActuator.attach(PIN, 1050, 2000);
   linearActuator.writeMicroseconds(linearValue);
+  linearValue = 700;
+  linearActuator.writeMicroseconds(linearValue);
 }
 
 void loop()
 {
-  linearValue = 700;
-  linearActuator.writeMicroseconds(linearValue);
+
 }
