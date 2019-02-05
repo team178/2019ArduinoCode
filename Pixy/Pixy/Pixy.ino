@@ -13,10 +13,16 @@ void setup()
   Serial.print("Starting...\n");
   Wire.begin();
   Wire.beginTransmission(8);
-  Wire.write(b);//for testing
+  Wire.onRequest(requestEvent);
+  //Wire.write(b);//for testing
   Wire.endTransmission(8);
   
   pixy.init();
+}
+
+void requestEvent()//might fix, its a tried 
+{
+  Wire.write(b);
 }
 
 void loop() 
