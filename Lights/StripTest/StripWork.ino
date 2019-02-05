@@ -11,11 +11,20 @@
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
 
-int(enforcerBlue) = 0;
-int(enforcerGold) = 1;
-int(green) = 2;
-int(orange) = 0;
-int(yellow) = 1;
+int(Orange) = 0;
+
+void orangeFlashing()
+{
+  Orange = orange;
+  
+  strip.setPixelColor(orange, 255, 60, 0);
+  
+  strip.show();
+  delay(50);
+
+
+  orange = orange + 1;
+}
 
 void setup() {
   // put your setup code here, to run once:
@@ -26,24 +35,6 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  enforcerBlue = enforcerBlue;
-  enforcerGold = enforcerGold;
-  green = green;
-  orange = orange;
   
-  //strip.setPixelColor(enforcerBlue, 15,8,56);
-  //strip.setPixelColor(enforcerGold, 255,208,0);
-  //strip.setPixelColor(green, 0, 255, 0);
-  strip.setPixelColor(orange, 255, 60, 0);
-  //strip.setPixelColor(yellow, 236, 179, 1);
-  strip.show();
-  delay(50);
-
-
-  orange = orange + 1;
-  //strip.setPixelColor(orange, 0,0,0);
-  //strip.setPixelColor(yellow, 0,0,0);
-  //strip.show();
-  //delay(500);
-  
+  orangeFlashing();
 }
