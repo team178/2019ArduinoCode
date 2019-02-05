@@ -8,15 +8,19 @@ Pixy pixy;
 
 void setup() 
 {
+  byte b = 11;
   Serial.begin(9600);
   Serial.print("Starting...\n");
+  Wire.begin();
+  Wire.beginTransmission(8);
+  Wire.write(b);//for testing
+  Wire.endTransmission(8);
   
   pixy.init();
 }
 
 void loop() 
 {
-  Wire.write(1);
   
   static int i = 0;
   uint16_t blocks;
@@ -34,16 +38,13 @@ void loop()
     //50 frames per second to prevent the Pixy from overloading
     if (i%50==0)
     {
-      pixy.blocks[0].x;
-      Serial.print("Yash\n");
+
       //this is where we want to write
-      pixy.blocks[1].x;
-      Serial.print("I don't know\n");
-      //this is where we want to write
+
     }
-    
   }
   else
+    
   {
     // return -1
     Serial.print("The\n");
