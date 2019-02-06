@@ -4,7 +4,7 @@
 #define PIN 6
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
-
+int location==0;
 void setup()
 {
 strip.begin();
@@ -14,13 +14,15 @@ strip.show();
 
 
 void loop(){
-int location=0;
+
 
 strip.setPixelColor(location,255,255,255);
 location++;
 
-delay(1000);
+
  
+ if(location==30)
+ strip.setPixelcolor{(location++,0,0,0)};
  
 strip.show();
 } 
