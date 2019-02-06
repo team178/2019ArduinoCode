@@ -16,12 +16,13 @@ strip.show();
 void loop(){
 int location=0;
 
-strip.setPixelColor(location ++ 1,255,255,255);
+strip.setPixelColor(location,255,255,255);
+location++;
 
 delay(1000);
  
  
-strip.show()
+strip.show();
 } 
 
 
