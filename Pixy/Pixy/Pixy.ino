@@ -1,9 +1,9 @@
-
 #include <SPI.h>
 #include <Pixy.h>
 #include <Wire.h>
 
 Pixy pixy;
+<<<<<<< HEAD
 byte b = 11;
 
 void setup() 
@@ -13,16 +13,21 @@ void setup()
   Serial.print("Starting...\n");
   Wire.begin();
   Wire.beginTransmission(8);
+=======
+byte b = 11;  
+
+void setup() 
+{
+  Wire.begin(8);
+>>>>>>> master
   Wire.onRequest(requestEvent);
-  //Wire.write(b);//for testing
-  Wire.endTransmission(8);
   
   pixy.init();
 }
 
 void requestEvent()//might fix, its a tried 
 {
-  Wire.write(b);
+  Wire.write(178);
 }
 
 void loop() 
