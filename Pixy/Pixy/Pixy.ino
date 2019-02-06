@@ -4,11 +4,12 @@
 #include <Wire.h>
 
 Pixy pixy;
-
+byte b = 11;
 
 void setup() 
 {
-  byte b = 11;  Serial.begin(9600);
+  byte b = 11;  
+  Serial.begin(9600);
   Serial.print("Starting...\n");
   Wire.begin();
   Wire.beginTransmission(8);
