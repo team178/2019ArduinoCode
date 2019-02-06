@@ -17,12 +17,23 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
   // put your setup code here, to run once:
+  turnOff();
   Wire.begin(8);
-  //Wire.onReceive(readRoborioMessage);
+  Wire.onReceive(readRoborioMessage);
   Serial.begin(9600);
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
   Serial.print("Starting...\n");
+}
+
+void readRoborioMessage(int howMany) {
+  String myWord = "";
+  while (0 < Wire.available()) {
+    char c = Wire.read();
+    myWord = myWord + c;
+  }
+  Serial.println(myWord);
+  //go to Tools --> Serial Monitor or press Ctrl+Shift+M
 }
 
 void loop() {
@@ -33,8 +44,8 @@ void loop() {
   //blueFlashing();
   //turnOff();
   turnRGBFlashing(255, 60, 0); //orange
-  turnRGBFlashing(200,125,0); //yellow
-  turnRGBFlashing(0, 0, 255); //blue
+  //turnRGBFlashing(200,125,0); //yellow
+  //turnRGBFlashing(0, 0, 255); //blue
 }
 
 
@@ -42,42 +53,6 @@ void loop() {
 void turnOff() {
   for (int i = 0; i <= 30; i++) {
     strip.setPixelColor(i, 0, 0, 0);
-  }
-  strip.show();
-}
-
-
-void orangeFlashing()
-{
-  for (int i = 0; i <= 30; i++)
-  {
-    strip.setPixelColor(i, 255, 60, 0);
-    strip.show();
-    delay(50);
-  }
-  strip.show();
-}
-
-
-void yellowFlashing()
-{
-  for (int i = 0; i <= 30; i++)
-  {
-    strip.setPixelColor(i, 200,125,0);
-    strip.show();
-    delay(50);
-  }
-  strip.show();
-}
-
-
-void blueFlashing()
-{
-  for(int i=0 ; i <= 30; i++)
-  {
-    strip.setPixelColor(i, 0,0,255);
-    strip.show();
-    delay(50);  
   }
   strip.show();
 }
@@ -106,7 +81,14 @@ void turnRGBFlashing(int R, int G, int B)
   {
     strip.setPixelColor(i,R,G,B);
     strip.show();
-    delay(50);  
+    delay(50);
+  }
+  strip.show();
+  for(int i=30 ; 30 <= i >= 0; i--)
+  {
+    strip.setPixelColor(i,0,0,0);
+    strip.show();
+    delay(50);
   }
   strip.show();
 }
