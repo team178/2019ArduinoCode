@@ -2,24 +2,11 @@
 #include <Pixy.h>
 #include <Wire.h>
 
-Pixy pixy;
-<<<<<<< HEAD
-byte b = 11;
-
-void setup() 
-{
-  byte b = 11;  
-  Serial.begin(9600);
-  Serial.print("Starting...\n");
-  Wire.begin();
-  Wire.beginTransmission(8);
-=======
-byte b = 11;  
+Pixy pixy;  
 
 void setup() 
 {
   Wire.begin(8);
->>>>>>> master
   Wire.onRequest(requestEvent);
   
   pixy.init();
