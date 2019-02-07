@@ -1,23 +1,26 @@
-
 #include <SPI.h>
 #include <Pixy.h>
 #include <Wire.h>
 
-Pixy pixy;
-
+Pixy pixy;  
+int val;
 
 void setup() 
 {
-  Serial.begin(9600);
-  Serial.print("Starting...\n");
+  Wire.begin(8);
+  Wire.onRequest(requestEvent);
   
   pixy.init();
 }
 
+void requestEvent()
+{
+  Wire.write(val);
+}
+
 void loop() 
 {
-  Wire.write(1);
-  /*
+  
   static int i = 0;
   uint16_t blocks;
   
@@ -26,7 +29,6 @@ void loop()
   
   if (blocks)
   {
-    //r
     i++;
     Serial.print("Blue\n");
 
@@ -34,20 +36,17 @@ void loop()
     //50 frames per second to prevent the Pixy from overloading
     if (i%50==0)
     {
-      pixy.blocks[0].x;
-      Serial.print("Yash\n");
-      //this is where we want to write
-      pixy.blocks[1].x;
-      Serial.print("I don't know\n");
-      //this is where we want to write
+      val = pixy.blocks[0].x;
+      Wire.onRequest(requestEvent);
+      val = pixy.blocks[1].x;
+      Wire.onRequest(requestEvent);
     }
-    
   }
   else
+    
   {
-    // return -1
-    Serial.print("The\n");
+    val = -1;
+    Wire.onRequest(requestEvent);
   }
-  */
-
+  
 }
