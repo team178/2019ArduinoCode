@@ -11,9 +11,8 @@
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
-
-
 String myWord = "";
+boolean isON;
 
 void setup() {
   // put your setup code here, to run once:
@@ -24,9 +23,10 @@ void setup() {
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
   Serial.println("Starting...");
+  isON = false;
 }
 
-void readRoborioMessage(int howMany) {
+void readRoborioMessage() {
   myWord = "";
   while (0 < Wire.available()) {
     char c = Wire.read();
@@ -36,32 +36,42 @@ void readRoborioMessage(int howMany) {
   //go to Tools --> Serial Monitor or press Ctrl+Shift+M
 }
 
-void loop() {
+void loop() 
+{
   // put your main code here, to run repeatedly;
   //turnOff();
 
   String message = myWord;
-  
   if (message.equals("o"))
   {
-    turnRGBBounce(255, 60, 0); //orange
-    Serial.println("orange");
+    if (isON) {
+      turnOff();
+      isON = false;
+    } else {
+      turnRGBFlash(255, 60, 0); //orange
+      Serial.println("orange");
+    }
   }
-  else if (message.equals("enforcers"))
+  else if (message.equals("e"))
   {
-    turnEnforcers();
-    Serial.println("enforcers");
+    if (isON) {
+      Serial.println("yeet");
+      turnOff();
+      isON = false;
+    } else {
+      turnEnforcers();
+      Serial.println("enforcers");
+    }
   }
+  //turnRGBFlash(255, 60, 0);
   //turnRGBBounce(255, 60, 0); //orange
-  //turnRGBBounce(200,125,0); //yellow
+  //turnRGBBounce(200,125,0); //yellow 
   //turnRGBBounce(0, 0, 255); //blue
   //turnRGBBounce(255,10,0);//red alliance
   //turnRGBBounce(5,40,132); //blue alliance
   //turnFirst();
   //turnDeepSpace();
 }
-
-
 
 void turnOff() {
   for (int i = 0; i <= 30; i++) {
@@ -81,6 +91,42 @@ void turnRGB(int R, int G, int B)
   strip.setPixelColor(0,R,G,B);
   strip.show();
 }
+
+
+void turnRGBFlash(int R, int G, int B)
+{
+  //int i = 0;
+  int numbers[3];
+  numbers[3] = new int[3];
+  numbers[0] = R;
+  numbers[1] = G;
+  numbers[2] = B;
+  //isON = true;
+
+  
+ /* if(digitalRead(PIN) == LOW)
+  {
+      if (message == 0) 
+    {
+      message = 255;
+    }
+    else
+    {
+      message = 0;
+    }
+  
+    if(message > 0)
+    {
+      //for(int i=0; i <= 30; i++)
+      //{
+        strip.setPixelColor(0,R,G,B);
+        strip.show();
+      //}
+    }
+  }
+  */
+}
+
 
 
 void turnRGBBounce(int R, int G, int B)

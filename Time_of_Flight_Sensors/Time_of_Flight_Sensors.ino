@@ -6,7 +6,7 @@ VL53L0X_RangingMeasurementData_t measure;
 
 void setup() {
   Serial.begin(115200);
-  Wire.begin(8);
+  Wire.begin(18);
 
   // wait until serial port opens for native USB devices
   while (! Serial) {
