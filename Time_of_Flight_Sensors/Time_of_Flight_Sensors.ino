@@ -34,11 +34,13 @@ void loop() {
   lox.rangingTest(&measure, false); // pass in 'true' to get debug data printout!
 
   if (measure.RangeStatus != 4) {  // phase failures have incorrect data
-    Serial.print("Distance (mm): "); Serial.println(measure.RangeMilliMeter);
+    Serial.print("Distance (mm): "); 
+    Serial.println(measure.RangeMilliMeter);
     Wire.onRequest(requestEvent);
 
   } else {
     Serial.println(" out of range ");
+    Wire.onRequest(requestEvent);
   }
     
   delay(100);
