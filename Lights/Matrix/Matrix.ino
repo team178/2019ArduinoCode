@@ -66,4 +66,3 @@ void loop() {
   matrix.show();
   delay(100);
 }
-
