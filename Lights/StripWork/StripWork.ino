@@ -14,8 +14,8 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
 String myWord = "";
 boolean isON;
 
-void setup() {
-  // put your setup code here, to run once:
+void setup()
+{
   turnOff();
   Wire.begin(8);
   Wire.onReceive(readRoborioMessage);
@@ -23,10 +23,11 @@ void setup() {
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
   Serial.println("Starting...");
-  isON = false;
 }
 
-void readRoborioMessage() {
+void readRoborioMessage()
+{
+  //used for communication between roborio and arduino
   myWord = "";
   while (0 < Wire.available()) {
     char c = Wire.read();
@@ -38,32 +39,31 @@ void readRoborioMessage() {
 
 void loop() 
 {
-  // put your main code here, to run repeatedly;
   //turnOff();
-
+  //when the roborio sends a message from an input, it will initiate the correct if statement
   String message = myWord;
   if (message.equals("o"))
   {
-    if (isON) {
-      turnOff();
-      isON = false;
-    } else {
-      turnRGBFlash(255, 60, 0); //orange
-      Serial.println("orange");
-    }
+    turnRGBFlash(255, 40, 0); //cargo orange; press left bumper
   }
-  else if (message.equals("e"))
+
+  if (message.equals("f"))
   {
-    if (isON) {
-      Serial.println("yeet");
-      turnOff();
-      isON = false;
-    } else {
-      turnEnforcers();
-      Serial.println("enforcers");
-    }
+    //turnOff();
+    turnRGBFlash(175,75,0); //hatch panel yellow; press right bumper
   }
-  //turnRGBFlash(255, 60, 0);
+
+  if (message.equals("a"))
+  {
+    turnDeepSpace();
+  }
+
+  if (message.equals("b"))
+  {
+    turnRGBBounce(0,0,255);
+  }
+  
+  //turnRGBFlash(255, 60, 0); //orange
   //turnRGBBounce(255, 60, 0); //orange
   //turnRGBBounce(200,125,0); //yellow 
   //turnRGBBounce(0, 0, 255); //blue
@@ -73,7 +73,11 @@ void loop()
   //turnDeepSpace();
 }
 
-void turnOff() {
+
+
+
+void turnOff()
+{
   for (int i = 0; i <= 30; i++) {
     strip.setPixelColor(i, 0, 0, 0);
   }
@@ -95,36 +99,20 @@ void turnRGB(int R, int G, int B)
 
 void turnRGBFlash(int R, int G, int B)
 {
-  //int i = 0;
+  int i = 0;
   int numbers[3];
   numbers[3] = new int[3];
   numbers[0] = R;
   numbers[1] = G;
   numbers[2] = B;
-  //isON = true;
-
-  
- /* if(digitalRead(PIN) == LOW)
-  {
-      if (message == 0) 
+  for(int i=0; i <= 30; i++)
     {
-      message = 255;
+      strip.setPixelColor(i,R,G,B);
+      strip.show();
     }
-    else
-    {
-      message = 0;
-    }
-  
-    if(message > 0)
-    {
-      //for(int i=0; i <= 30; i++)
-      //{
-        strip.setPixelColor(0,R,G,B);
-        strip.show();
-      //}
-    }
-  }
-  */
+  delay(250);
+  turnOff();
+  delay(250);
 }
 
 
@@ -143,7 +131,6 @@ void turnRGBBounce(int R, int G, int B)
     delay(50);
     strip.show();
   }
-  //strip.show();
   for(int i=30; i >= 0; i--)
   {
     strip.setPixelColor(i,0,0,0);
@@ -151,11 +138,11 @@ void turnRGBBounce(int R, int G, int B)
     delay(50);
     strip.show();
   }
-  //strip.show();
 }
 
 
-void turnEnforcers() {
+void turnEnforcers()
+{
   // enforcers Colors:
   for (int i = 36; i > 0; i--) {
     for (int x = 0; x <= 30; x += 4) {

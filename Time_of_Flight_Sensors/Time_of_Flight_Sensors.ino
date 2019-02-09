@@ -1,4 +1,4 @@
-#include "Adafruit_VL53L0X.h"
+  #include "Adafruit_VL53L0X.h"
 #include <Wire.h>
 
 Adafruit_VL53L0X lox = Adafruit_VL53L0X();
@@ -40,7 +40,6 @@ void loop() {
 
   } else {
     Serial.println(" out of range ");
-    Wire.onRequest(requestEvent);
   }
     
   delay(100);
