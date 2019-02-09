@@ -1,2 +1,2 @@
 # 2019ArduinoCode
-Light code that will be used in the 2019 season.
+Arduino code for the 2019 robot.
