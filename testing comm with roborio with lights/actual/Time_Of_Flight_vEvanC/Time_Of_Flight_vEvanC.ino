@@ -41,7 +41,7 @@ void loop() {
   Serial.print("Reading a measurement from right side... ");
   rightdist.rangingTest(&measureright, false); // pass in 'true' to get debug data printout!
 
-  if (measureright.RangeStatus != 4) {  // phase failures have incorrect data
+  if (measureright.RangeStatus != 4) {  //should probably add a margin of error
     Serial.print("Distance (mm): "); 
     Serial.println(measureright.RangeMilliMeter);
     //Wire.onRequest(requestEventRight);
@@ -53,7 +53,7 @@ void loop() {
     Serial.print("Reading a measurement from left side... ");
   leftdist.rangingTest(&measureleft, false); // pass in 'true' to get debug data printout!
 
-  if (measureleft.RangeStatus != 4) {  // phase failures have incorrect data
+  if (measureleft.RangeStatus != 4) {  
     Serial.print("Distance (mm): "); 
     Serial.println(measureleft.RangeMilliMeter);
     //Wire.onRequest(requestEventLeft);
