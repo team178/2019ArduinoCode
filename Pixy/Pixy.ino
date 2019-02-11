@@ -37,16 +37,13 @@ void loop()
     if (i%50==0)
     {
       val = pixy.blocks[0].x;
-      Wire.onRequest(requestEvent);
       val = pixy.blocks[1].x;
-      Wire.onRequest(requestEvent);
     }
   }
   else
     
   {
     val = -1;
-    Wire.onRequest(requestEvent);
   }
   
 }
