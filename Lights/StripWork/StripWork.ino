@@ -16,7 +16,7 @@ String myWord = "";
 void setup()
 {
   turnOff();
-  Wire.begin(8);
+  Wire.begin(7);
   Wire.onReceive(readRoborioMessage);
   Serial.begin(9600);
   strip.begin();
@@ -43,24 +43,26 @@ void loop()
   String message = myWord;
 
   
-  if (message.equals("l"))
+  if (message.equals("c"))
   {
+    //cargo
     turnRGBFlash(255, 40, 0); //cargo orange; press left bumper
   }
 
-  if (message.equals("r"))
+  if (message.equals("h"))
   {
+    //hatch panel
     turnRGBFlash(175,75,0); //hatch panel yellow; press right bumper
   }
 
   if (message.equals("a"))
   {
-    turnDeepSpace();
+    turnRGBBounce(255,10,0);//red alliance
   }
 
   if (message.equals("b"))
   {
-    turnRGBBounce(0,0,255);
+    turnRGBBounce(5,40,132); //blue alliance
   }
 
   if (message.equals("f"))
