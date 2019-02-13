@@ -1,8 +1,10 @@
+
 #include "Adafruit_VL53L0X.h"
 #include <Wire.h>
 #include <SoftwareWire.h>
+#include "math.h"
 
-SoftwareWire master(2, 3);
+SoftwareWire softwareI2C(2, 4);
 
 Adafruit_VL53L0X rightdist = Adafruit_VL53L0X();
 VL53L0X_RangingMeasurementData_t measureright;
@@ -10,7 +12,7 @@ VL53L0X_RangingMeasurementData_t measureright;
 Adafruit_VL53L0X leftdist = Adafruit_VL53L0X();
 VL53L0X_RangingMeasurementData_t measureleft;
 
-String state = "Not Initialized";
+String state = "n";
 
 void setup() {
   Serial.begin(115200);
@@ -21,13 +23,12 @@ void setup() {
     delay(1);
   }
   
-  Serial.println("Adafruit VL53L0X test");
-  if (!leftdist.begin(0x29, false, master) || !rightdist.begin(0x30, false, master)) {
-    Serial.println(F("Failed to boot VL53L0X"));
+  Serial.println("Adafruit VL53L0X sensors booting...");
+  if (!leftdist.begin(0x29, false) || !rightdist.begin(0x30, false)) {
+    Serial.println(F("Failed to boot at least one VL53L0X sensor"));
     while(1);
   }
   // power 
-  Serial.println(F("VL53L0X API Simple Ranging example\n\n")); 
   Wire.onRequest(roborioHasAskedForData);
 }
 
@@ -62,17 +63,17 @@ void loop() {
     Serial.println(" out of range on left side ");
   }
 
-  if (measureright.RangeMilliMeter == measureleft.RangeMilliMeter) {
+  if (abs(measureright.RangeMilliMeter - measureleft.RangeMilliMeter) < 3) {
     Serial.println(" success ");
-    state = "Ready";
+    state = "y"; //ready
   } else {
-   if (measureright.RangeMilliMeter > measureleft.RangeMilliMeter){
+   if (measureright.RangeMilliMeter > measureleft.RangeMilliMeter && abs(measureright.RangeMilliMeter - measureleft.RangeMilliMeter) > 3){
     Serial.println("not parallel, turn right.");
-    state = "Turn Right";
+    state = "r"; //turn right
    }
-   if (measureleft. RangeMilliMeter > measureright.RangeMilliMeter){
+   if (measureleft. RangeMilliMeter > measureright.RangeMilliMeter && abs(measureright.RangeMilliMeter - measureleft.RangeMilliMeter) > 3){
     Serial.println("not parallel, turn left.");
-    state = "Turn Left";
+    state = "l"; //turn left
    }
   }
   delay(100);
