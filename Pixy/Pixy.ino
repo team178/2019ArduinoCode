@@ -1,4 +1,5 @@
 //this is for pixy the FIRST. DOES NOT WORK WITH PIXY2
+//only kept for archiving purposes. WILL NOT BE USED
 
 
 #include <SPI.h>
