@@ -44,6 +44,7 @@ void loop()
   
   else
   {
+    //will return value of -1 when nothing is recognized
     val = -1;
     Wire.onRequest(requestEvent);
   }
