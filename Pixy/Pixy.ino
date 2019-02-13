@@ -1,3 +1,6 @@
+//this is for pixy the FIRST. DOES NOT WORK WITH PIXY2
+
+
 #include <SPI.h>
 #include <Pixy.h>
 #include <Wire.h>
