@@ -55,7 +55,7 @@ void loop()
     turnRGBFlash(175,75,0); //hatch panel yellow; press right bumper
   }
 
-  if (message.equals("a"))
+  if (message.equals("r"))
   {
     turnRGBBounce(255,10,0);//red alliance
   }
