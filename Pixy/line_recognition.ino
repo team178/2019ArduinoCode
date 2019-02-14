@@ -1,3 +1,6 @@
+//won't work. Line tracking in the pixy2 looks more into DIRECTION.
+//also camera will not be tilted downwards, will not see the lines anyways
+
 #include <Pixy2.h>
 #include <Wire.h>
 
