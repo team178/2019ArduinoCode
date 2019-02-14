@@ -1,8 +1,8 @@
 #include "Adafruit_VL53L0X.h"
 #include <Wire.h>
-#include <SoftwareWire.h>
+#include <SoftWire.h>
 
-SoftwareWire master(2, 3);
+SoftWire master(2, 3);
 
 Adafruit_VL53L0X rightdist = Adafruit_VL53L0X();
 VL53L0X_RangingMeasurementData_t measureright;
