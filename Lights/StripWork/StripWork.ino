@@ -79,6 +79,9 @@ void loop()
   {
     turnRainbow();
   }
+  
+  
+  
   //turnRGBFlash(255, 60, 0); //orange
   //turnRGBBounce(255, 60, 0); //orange
   //turnRGBBounce(200,125,0); //yellow 
@@ -93,7 +96,10 @@ void loop()
   //turnEnforcers();
 }
 
-
+if (message.equals("n"))
+{
+  turnoff():
+}
 
 
 void turnOff()
