@@ -44,50 +44,29 @@ void loop()
   String message = myWord;
 
   
-  if (message.equals("c")) //mainB - cargo
+  if (message.equals("c")) //mainB - cargo orange flashing
   {
-    //cargo
-    turnRGBFlash(255, 40, 0); //cargo orange
+    turnRGBFlash(255, 40, 0);
   }
 
-  if (message.equals("h")) //mainY - hatch panel
+  if (message.equals("h")) //mainY - hatch panel yellow flashing
   {
-    //hatch panel
     turnRGBFlash(175,75,0); //hatch panel yellow
   }
-
-  if (message.equals("r"))
-  {
-    turnRGBBounce(255,10,0);//red alliance
-  }
-
-  if (message.equals("b"))
-  {
-    turnRGBBounce(5,40,132); //blue alliance
-  }
-
-  if (message.equals("f")) //mainX - default
+  
+  if (message.equals("f")) //mainX - default enforcers
   {
     turnEnforcers();
   }
-
-  if (message.equals("s"))
-  {
-    turnFirst();
-  }
-
-  if (message.equals("y"))
-  {
-    turnRainbow();
-  }
-
+  
   if (message.equals("n")) //mainA - off
   {
-  turnOff();
-   }
+    turnOff();
+  }
   
   
-  turnRGBFlash(255, 60, 0); //orange
+  
+  //turnRGBFlash(255, 60, 0); //orange
   //turnRGBFlash(150,255,0); //lime green for hatch panel
   //turnRGBBounce(255, 60, 0); //orange
   //turnRGBBounce(200,125,0); //yellow 
@@ -99,7 +78,7 @@ void loop()
   //turnPolar();
   //turnRainbow();
   //turnBlueAndGold();
-  //turnEnforcers();
+  turnEnforcers();
 }
 
 
@@ -122,7 +101,7 @@ void turnRGBFlash(int R, int G, int B)
   numbers[0] = R;
   numbers[1] = G;
   numbers[2] = B;
-  for(int i=0; i <= numOfPixels; i++)
+  for(int i = 0; i <= numOfPixels; i++)
     {
       strip.setPixelColor(i,R,G,B);
       strip.show();
@@ -141,14 +120,14 @@ void turnRGBBounce(int R, int G, int B)
   numbers[0] = R;
   numbers[1] = G;
   numbers[2] = B;
-  for(int i=0 ; i <= numOfPixels; i++)
+  for(int i = 0; i <= numOfPixels; i++)
   {
     strip.setPixelColor(i,R,G,B);
     strip.show();
     delay(50);
     strip.show();
   }
-  for(int i=numOfPixels; i >= 0; i--)
+  for(int i = numOfPixels; i >= 0; i--)
   {
     strip.setPixelColor(i,0,0,0);
     strip.show();
@@ -160,18 +139,18 @@ void turnRGBBounce(int R, int G, int B)
 
 void turnEnforcers()
 {
-  // enforcers Colors:
+  // enforcers Colors
   for (int i = numOfPixels; i > 0; i--) {
     for (int x = 0; x <= numOfPixels; x += 4) {
       strip.setPixelColor(i + x, 229, 187, 0);
       strip.setPixelColor(i + (x - 1), 229, 187, 0);
       strip.setPixelColor(i + (x - 2), 7, 16, 79);
-      strip.setPixelColor(i + (x - 3), 7, 16, 79);
+      //strip.setPixelColor(i + (x - 3), 7, 16, 79);
 
       strip.setPixelColor(i - x, 229, 187, 0);
       strip.setPixelColor(i - (x + 1), 229, 187, 0);
       strip.setPixelColor(i - (x + 2), 7, 16, 99);
-      strip.setPixelColor(i - (x + 3), 7, 16, 99);
+      //strip.setPixelColor(i - (x + 3), 7, 16, 99);
     }
 
     strip.show();
@@ -182,8 +161,8 @@ void turnEnforcers()
 
 void turnFirst() 
 {
-  for (int i=numOfPixels; i > 0; i--){
-    for(int x= 0; x <=numOfPixels; x+=4){
+  for (int i = numOfPixels; i > 0; i--){
+    for(int x = 0; x <= numOfPixels; x += 4){
       strip.setPixelColor(i+x,237,28,36);
       strip.setPixelColor(i+(x-1),0,101,179);
       strip.setPixelColor(i+(x-2),35,31,32);
@@ -202,8 +181,8 @@ void turnFirst()
 
 void turnDeepSpace()  
 {
-  for (int i=numOfPixels; i > 0; i--){
-    for(int x= 0; x <=numOfPixels; x+=4){
+  for (int i = numOfPixels; i > 0; i--){
+    for(int x = 0; x <= numOfPixels; x += 4){
       strip.setPixelColor(i+x,239,120,34);
       strip.setPixelColor(i+(x-1),148,148,146);
       //strip.setPixelColor(i+(x-2),35,31,32);
@@ -221,8 +200,8 @@ void turnDeepSpace()
 
 
 void turnPolar() {
-  for (int i=numOfPixels; i > 0; i--){
-    for(int x= 0; x <=numOfPixels; x+=3){
+  for (int i = numOfPixels; i > 0; i--){
+    for(int x = 0; x <= numOfPixels; x += 3){
       strip.setPixelColor(i+x,190,0,90);
       strip.setPixelColor(i+(x-1),60,49,110);
       strip.setPixelColor(i+(x-2),0,26,110);
@@ -237,8 +216,8 @@ void turnPolar() {
 }
 
 void turnRainbow() {
-    for (int i=numOfPixels; i > 0; i--){
-      for(int x= 0; x <=numOfPixels; x+=6){
+    for (int i = numOfPixels; i > 0; i--){
+      for(int x = 0; x <= numOfPixels; x += 6){
         strip.setPixelColor(i+x,255,0,0);
         strip.setPixelColor(i+(x-1),255,165,0);
         strip.setPixelColor(i+(x-2),255,255,0);
