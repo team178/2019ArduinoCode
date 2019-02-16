@@ -95,20 +95,24 @@ void turnOff()
 
 void turnRGBFlash(int R, int G, int B)
 {
-  int i = 0;
-  int numbers[3];
-  numbers[3] = new int[3];
-  numbers[0] = R;
-  numbers[1] = G;
-  numbers[2] = B;
-  for(int i = 0; i <= numOfPixels; i++)
-    {
-      strip.setPixelColor(i,R,G,B);
-      strip.show();
-    }
-  delay(250);
-  turnOff();
-  delay(250);
+  for(int count = 0; count <= 20; count++)
+  {
+    int i = 0;
+    int numbers[3];
+    numbers[3] = new int[3];
+    numbers[0] = R;
+    numbers[1] = G;
+    numbers[2] = B;
+    for(int i = 0; i <= numOfPixels; i++)
+      {
+        strip.setPixelColor(i,R,G,B);
+        strip.show();
+      }
+    delay(250);
+    turnOff();
+    delay(250);
+    //0.5 of a second
+  }
 }
 
 
