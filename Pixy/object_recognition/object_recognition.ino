@@ -10,7 +10,7 @@ void setup()
   Wire.begin(8);//technically address doesn't need to be here, but i haven't seen it work without it. (put 8 in as input)
   //Wire.onRequest(requestEvent);
   Serial.begin(115200);
-  Serial.print("Starting...\n");
+  Serial.println("Starting...");
   Wire.onRequest(requestEvent);
   pixy.init();
   pixy.setCameraBrightness(16);
