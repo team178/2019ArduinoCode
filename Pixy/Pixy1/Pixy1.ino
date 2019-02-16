@@ -13,6 +13,8 @@ void setup()
 {
   Wire.begin(8);
   Wire.onRequest(requestEvent);
+
+  Serial.begin(115200);
   
   pixy.init();
 }
@@ -47,7 +49,7 @@ void loop()
   else
     
   {
-    val = -1;
+    val = 5;
   }
   
 }

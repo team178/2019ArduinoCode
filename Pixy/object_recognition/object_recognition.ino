@@ -2,12 +2,13 @@
 #include <Wire.h>
 
 Pixy2 pixy;  
-int val;
+int16_t val;
 
 void setup() 
 {
-  Wire.begin();//technically address doesn't need to be here, but i haven't seen it work without it. (put 8 in as input)
-  Serial.begin(115200);
+  Wire.begin(8);//technically address doesn't need to be here, but i haven't seen it work without it. (put 8 in as input)
+  Wire.onRequest(requestEvent);
+  Serial.begin(9600);
   Serial.print("Starting...\n");
   //Wire.onRequest(requestEvent);
   pixy.init();
@@ -22,18 +23,18 @@ void requestEvent()//deprecated atm
 
 void sendFirstX()//sends first x value over i2c address 8, done in order to better differentiate values in java
 {
+  Wire.begin(8);
   Wire.beginTransmission(8);
   Wire.write(val);
   Wire.endTransmission(8);
-  //Serial.println((val));
 }
 
 void sendSecondX()//sends second x value over i2c address 9, see above
 {
+  Wire.begin(9);
   Wire.beginTransmission(9);
   Wire.write(val);
   Wire.endTransmission(9);
-  //Serial.println((val));
 }
 
 
@@ -59,8 +60,10 @@ void loop()
       if (i % 2 == 0)
       {
         Wire.onRequest(sendFirstX);
+        Serial.println(val);
       } else {
         Wire.onRequest(sendSecondX);
+        Serial.println(val);
       }
     }
   }
@@ -68,8 +71,12 @@ void loop()
   else
   {
     //will return value of -1 when nothing is recognized
-    val = -1;
-    Wire.onRequest(requestEvent);
+    while (val < 320) {
+    Serial.println(val);//pnly one works for some reason 
+    val = val + 1;//pnly one works for some reason
+    delay(1000);
+    }
+    //Wire.onRequest(requestEvent);
   }
   
 }
