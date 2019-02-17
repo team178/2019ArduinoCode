@@ -51,7 +51,7 @@ void loop()
 
   if (message.equals("h")) //mainY - hatch panel yellow flashing
   {
-    turnRGBFlash(175,75,0); //hatch panel yellow
+    turnRGBFlash(150,255,0); //hatch panel yellow
   }
   
   if (message.equals("f")) //mainX - default enforcers
