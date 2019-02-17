@@ -42,11 +42,17 @@ void loop()
   //when the roborio sends a message from an input,
   //it will initiate the correct if statement
   String message = myWord;
+  int counter = 0;
 
   
   if (message.equals("c")) //mainB - cargo orange flashing
   {
+    while(counter < 6)
+    {
     turnRGBFlash(255, 40, 0);
+    counter++;
+    delay(1000);
+    }
   }
 
   if (message.equals("h")) //mainY - hatch panel yellow flashing
