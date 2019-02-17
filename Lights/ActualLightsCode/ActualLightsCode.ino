@@ -17,7 +17,7 @@ int numOfPixels = 59;
 void setup()
 {
   turnOff();
-  Wire.begin(7);
+  Wire.begin(1); //change to 7
   Wire.onReceive(readRoborioMessage); 
   Serial.begin(9600);
   strip.begin();
@@ -57,7 +57,7 @@ void loop()
 
   if (message.equals("h")) //mainY - hatch panel yellow flashing
   {
-    turnRGBFlash(175,75,0); //hatch panel yellow
+    turnRGBFlash(150,255,0); //hatch panel yellow
   }
   
   if (message.equals("f")) //mainX - default enforcers
@@ -69,6 +69,7 @@ void loop()
   {
     turnOff();
   }  
+  //turnEnforcers();
 }
 
 
@@ -83,20 +84,23 @@ void turnOff()
 
 void turnRGBFlash(int R, int G, int B)
 {
-  int i = 0;
-  int numbers[3];
-  numbers[3] = new int[3];
-  numbers[0] = R;
-  numbers[1] = G;
-  numbers[2] = B;
-  for(int i = 0; i <= numOfPixels; i++)
-    {
-      strip.setPixelColor(i,R,G,B);
-      strip.show();
-    }
-  delay(250);
-  turnOff();
-  delay(250);
+  for(int count = 0; count <= 10; count++)
+  {
+    int i = 0;
+    int numbers[3];
+    numbers[3] = new int[3];
+    numbers[0] = R;
+    numbers[1] = G;
+    numbers[2] = B;
+    for(int i = 0; i <= numOfPixels; i++)
+      {
+        strip.setPixelColor(i,R,G,B);
+        strip.show();
+      }
+    delay(250);
+    turnOff();
+    delay(250);
+  }
 }
 
 
