@@ -2,7 +2,7 @@
 #include <Wire.h>
 
 #define PIN 3
-int numOfPixels = 49;
+int numOfPixels = 5-9;
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = pin number (most are valid)
@@ -47,7 +47,7 @@ void loop()
   message = myWord;
   int counter = 0;
 
-  
+  turnEnforcersPattern();//default, wil run "all" the time
   if (message.equals("c")) //mainB - cargo orange flashing
   {    
     turnRGB(255, 40, 0);
@@ -65,10 +65,10 @@ void loop()
   
   if (message.equals("n")) //mainA - off
   {
-    turnOff();
+    //turnOff();
   }  
   //turnEnforcersPlain();
-  //turnRGBFlash(255, 40, 0);
+  turnRGBFlash(255, 40, 0);
 }
 
 
@@ -149,7 +149,7 @@ void turnEnforcersPattern()
     for (int i = numOfPixels; i > 0; i--)
     {
       for (int x = 0; x <= numOfPixels; x += 4) {
-        if(message.equals("f")) {
+       
           strip.setPixelColor(i + x, 229, 187, 0);
           //strip.setPixelColor(i + (x - 1), 229, 187, 0);
           strip.setPixelColor(i + (x - 2), 7, 16, 79);
@@ -158,12 +158,7 @@ void turnEnforcersPattern()
           strip.setPixelColor(i - x, 229, 187, 0);
           //strip.setPixelColor(i - (x + 1), 229, 187, 0);
           strip.setPixelColor(i - (x + 2), 7, 16, 99);
-          //strip.setPixelColor(i - (x + 3), 7, 16, 99);
-        } 
-        else 
-        {
-        return;
-        
+          //strip.setPixelColor(i - (x + 3), 7, 16, 99);      
       }
         strip.show();
         delay(100);
@@ -171,7 +166,7 @@ void turnEnforcersPattern()
     }
  
   }  
-}
+
 
 void turnEnforcersPlain()
 {
