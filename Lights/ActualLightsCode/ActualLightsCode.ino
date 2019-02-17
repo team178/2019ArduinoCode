@@ -1,7 +1,7 @@
 #include <Adafruit_NeoPixel.h>
 #include <Wire.h>
 
-#define PIN 6
+#define PIN 5//because 6 has a pin stuck in it now
 int numOfPixels = 59;
 
 // Parameter 1 = number of pixels in strip
