@@ -2,6 +2,7 @@
 #include <Wire.h>
 
 #define PIN 6
+int numOfPixels = 59;
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = pin number (most are valid)
@@ -10,14 +11,14 @@
 //   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(59, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(numOfPixels, PIN, NEO_GRB + NEO_KHZ800);
 String myWord = "";
-int numOfPixels = 59;
+
 
 void setup()
 {
   turnOff();
-  Wire.begin(1); //change to 7
+  Wire.begin(7); //change to 7
   Wire.onReceive(readRoborioMessage); 
   Serial.begin(9600);
   strip.begin();
@@ -70,6 +71,7 @@ void loop()
     turnOff();
   }  
   //turnEnforcers();
+  //turnRGBFlash(255, 40, 0);
 }
 
 
