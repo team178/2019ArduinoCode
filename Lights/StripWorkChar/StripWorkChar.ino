@@ -61,6 +61,7 @@ void loop()
   {
     turnOff();
   }  
+  turnEnforcersPlain();
 }
 
 
