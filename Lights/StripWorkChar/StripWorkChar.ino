@@ -43,39 +43,31 @@ void loop()
   //it will initiate the correct if statement
   int count = 0;
 
-  
-  while(count <= 10)
-  {
-    count++;
-    if(message == ('c'))
-    {
-      turnRGBFlash(255,40,0);
-    } else{
-      if(message == ('h')){
-        turnRGBFlash(150,255,0);
-      }      
-    }
-  }
+  /*
+  while(count <= 10 && message == 'c')
+  {    
+    turnRGBFlash(255,40,0);
+  }*/
 
 
   
   //turnEnforcersPattern();//default, wil run "all" the time
-  if (message == ('c')) //mainB - cargo orange flashing
+  if (message == 'c') //mainB - cargo orange flashing
   {    
-    turnRGB(255, 40, 0);
+    turnRGBFlash(255, 40, 0, 'c');
   }
 
-  if (message == ('h')) //mainY - hatch panel yellow flashing
+  if (message == 'h') //mainY - hatch panel yellow flashing
   {
-    turnRGB(150,255,0); //hatch panel yellow
+    turnRGBFlash(150,255,0,'h'); //hatch panel yellow
   }
   
-  if (message == ('f')) //mainX - default enforcers
+  if (message == 'f') //mainX - default enforcers
   {
     turnEnforcersPlain();
   }
   
-  if (message == ('n')) //mainA - off
+  if (message == 'n') //mainA - off
   {
     turnOff();
   }  
@@ -108,10 +100,14 @@ void turnRGB(int R, int G, int B)
       }
 }
 
-void turnRGBFlash(int R, int G, int B)
+void turnRGBFlash(int R, int G, int B, char c)
 {
   for(int count = 0; count <= 10; count++)
   {
+    if(message != c)
+    {
+      return;
+    }
     int i = 0;
     int numbers[3];
     numbers[3] = new int[3];
@@ -160,8 +156,16 @@ void turnEnforcersPattern()
 { 
     // enforcers Colors
     for (int i = numOfPixels; i > 0; i--)
+    /*if(message != 'f')
+    {
+      return;
+    }*/
     {
       for (int x = 0; x <= numOfPixels; x += 4) {
+       /* if(message != 'f')
+        {
+          return;
+        }*/
        
           strip.setPixelColor(i + x, 229, 187, 0);
           //strip.setPixelColor(i + (x - 1), 229, 187, 0);
