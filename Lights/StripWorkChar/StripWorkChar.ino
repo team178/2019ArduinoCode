@@ -41,17 +41,7 @@ void loop()
 {
   //when the roborio sends a message from an input,
   //it will initiate the correct if statement
-  int count = 0;
-
-  /*
-  while(count <= 10 && message == 'c')
-  {    
-    turnRGBFlash(255,40,0);
-  }*/
-
-
   
-  //turnEnforcersPattern();//default, wil run "all" the time
   if (message == 'c') //mainB - cargo orange flashing
   {    
     turnRGBFlash(255, 40, 0, 'c');
@@ -59,7 +49,7 @@ void loop()
 
   if (message == 'h') //mainY - hatch panel yellow flashing
   {
-    turnRGBFlash(150,255,0,'h'); //hatch panel yellow
+    turnRGBFlash(229, 187, 0,'h'); //hatch panel yellow
   }
   
   if (message == 'f') //mainX - default enforcers
@@ -71,8 +61,7 @@ void loop()
   {
     turnOff();
   }  
-  //turnEnforcersPlain();
-  //turnRGBFlash(255, 40, 0);
+  turnEnforcersPlain();
 }
 
 
@@ -84,27 +73,9 @@ void turnOff()
   strip.show();
 }
 
-
-void turnRGB(int R, int G, int B)
+void turnRGBFlash(int R, int G, int B, char sent)
 {
-    int i = 0;
-    int numbers[3];
-    numbers[3] = new int[3];
-    numbers[0] = R;
-    numbers[1] = G;
-    numbers[2] = B;
-    for(int i = 0; i <= numOfPixels; i++)
-      {
-        strip.setPixelColor(i,R,G,B);
-        strip.show();
-      }
-}
-
-void turnRGBFlash(int R, int G, int B, char c)
-{
-  for(int count = 0; count <= 10; count++)
-  {
-    if(message != c)
+    if(message != sent)
     {
       return;
     }
@@ -116,74 +87,13 @@ void turnRGBFlash(int R, int G, int B, char c)
     numbers[2] = B;
     for(int i = 0; i <= numOfPixels; i++)
       {
-        strip.setPixelColor(i,R,G,B);
-        
+        strip.setPixelColor(i,R,G,B);        
       }
     strip.show();
     delay(250);
     turnOff();
     delay(250);
-  }
 }
-
-
-
-void turnRGBBounce(int R, int G, int B)
-{
-  int numbers[3];
-  numbers[3] = new int[3];
-  numbers[0] = R;
-  numbers[1] = G;
-  numbers[2] = B;
-  for(int i = 0; i <= numOfPixels; i++)
-  {
-    strip.setPixelColor(i,R,G,B);
-    strip.show();
-    delay(50);
-    strip.show();
-  }
-  for(int i = numOfPixels; i >= 0; i--)
-  {
-    strip.setPixelColor(i,0,0,0);
-    strip.show();
-    delay(50);
-    strip.show();
-  }
-}
-
-
-void turnEnforcersPattern()
-{ 
-    // enforcers Colors
-    for (int i = numOfPixels; i > 0; i--)
-    /*if(message != 'f')
-    {
-      return;
-    }*/
-    {
-      for (int x = 0; x <= numOfPixels; x += 4) {
-       /* if(message != 'f')
-        {
-          return;
-        }*/
-       
-          strip.setPixelColor(i + x, 229, 187, 0);
-          //strip.setPixelColor(i + (x - 1), 229, 187, 0);
-          strip.setPixelColor(i + (x - 2), 7, 16, 79);
-          //strip.setPixelColor(i + (x - 3), 7, 16, 79);
-    
-          //strip.setPixelColor(i - x, 229, 187, 0);
-          //strip.setPixelColor(i - (x + 1), 229, 187, 0);
-          //strip.setPixelColor(i - (x + 2), 7, 16, 99);
-          //strip.setPixelColor(i - (x + 3), 7, 16, 99);      
-      }
-        strip.show();
-        delay(100);
-      
-    }
- 
-  }  
-
 
 void turnEnforcersPlain()
 {
