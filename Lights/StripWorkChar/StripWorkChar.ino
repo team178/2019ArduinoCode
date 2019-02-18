@@ -12,8 +12,7 @@ int numOfPixels = 59;
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(numOfPixels, PIN, NEO_GRB + NEO_KHZ800);
-String myWord = "";
-String message = "";
+char message;
 
 
 void setup()
@@ -31,12 +30,10 @@ void setup()
 void readRoborioMessage()
 {
   //used for communication between roborio and arduino
-  myWord = "";
-  while (0 < Wire.available()) {
-    char c = Wire.read();
-    myWord = myWord + c;
+  if (0 < Wire.available()) {
+    message = Wire.read();
   }
-  Serial.println(myWord);
+  Serial.println(message);
   //go to Tools --> Serial Monitor or press Ctrl+Shift+M
 }
 
@@ -44,27 +41,41 @@ void loop()
 {
   //when the roborio sends a message from an input,
   //it will initiate the correct if statement
-  //readRoborioMessage();
-  message = myWord;
-  int counter = 0;
+  int count = 0;
 
+  
+  while(count <= 10)
+  {
+    count++;
+    if(message == ('c'))
+    {
+      turnRGBFlash(255,40,0);
+    } else{
+      if(message == ('h')){
+        turnRGBFlash(150,255,0);
+      }      
+    }
+  }
+
+
+  
   //turnEnforcersPattern();//default, wil run "all" the time
-  if (message.equals("c")) //mainB - cargo orange flashing
+  if (message == ('c')) //mainB - cargo orange flashing
   {    
     turnRGB(255, 40, 0);
   }
 
-  if (message.equals("h")) //mainY - hatch panel yellow flashing
+  if (message == ('h')) //mainY - hatch panel yellow flashing
   {
     turnRGB(150,255,0); //hatch panel yellow
   }
   
-  if (message.equals("f")) //mainX - default enforcers
+  if (message == ('f')) //mainX - default enforcers
   {
     turnEnforcersPlain();
   }
   
-  if (message.equals("n")) //mainA - off
+  if (message == ('n')) //mainA - off
   {
     turnOff();
   }  
@@ -99,8 +110,8 @@ void turnRGB(int R, int G, int B)
 
 void turnRGBFlash(int R, int G, int B)
 {
-  //for(int count = 0; count <= 10; count++)
-  //{
+  for(int count = 0; count <= 10; count++)
+  {
     int i = 0;
     int numbers[3];
     numbers[3] = new int[3];
@@ -110,12 +121,13 @@ void turnRGBFlash(int R, int G, int B)
     for(int i = 0; i <= numOfPixels; i++)
       {
         strip.setPixelColor(i,R,G,B);
-        strip.show();
+        
       }
+    strip.show();
     delay(250);
     turnOff();
     delay(250);
-  //}
+  }
 }
 
 
