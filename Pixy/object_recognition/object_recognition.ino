@@ -32,7 +32,8 @@ void loop()
   {
         //sends first x value 
         val = pixy.ccc.blocks[0].m_x;//takes x value from 0th position in array from getBlocks();
-        pixy.ccc.blocks[0].print();//prints data about the block, like it literally prints all of the info stored
+        pixy.ccc.blocks[0].print();//prints data about the block, like it literally prints all of the info 
+        delay(100);
         valArray[1] = val & 0xFF;//shifts byte over, then bitwise and, essentially to be able to send the values
         valArray[0] = (val >> 8) & 0xFF;
         Serial.print(valArray[0]);
@@ -43,6 +44,7 @@ void loop()
         //sends second x value 
         val = pixy.ccc.blocks[1].m_x;
         pixy.ccc.blocks[1].print();//see above
+        delay(100);
         valArray[3] = val & 0xFF;//same as above
         valArray[2] = (val >> 8) & 0xFF;
         Serial.print(valArray[2]);
@@ -54,6 +56,7 @@ void loop()
   else
   {
     val = 0;//if no objects are recongnized, sends zero 
+    Serial.println("no objects");
     valArray[1] = val & 0xFF;//same as above 
     valArray[0] = (val >> 8) & 0xFF;
   }
