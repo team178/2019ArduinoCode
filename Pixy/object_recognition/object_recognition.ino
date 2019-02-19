@@ -55,7 +55,7 @@ void loop()
   
   else
   {
-    val = -1;//if no objects are recongnized, sends -1 
+    val = 316;//if no objects are recongnized, sends 316 (is out of range)
     Serial.println("no objects");
     valArray[1] = val & 0xFF;//same as above 
     valArray[0] = (val >> 8) & 0xFF;
