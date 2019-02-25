@@ -2,7 +2,7 @@
 #include <Wire.h>
 
 #define PIN 3
-int numOfPixels = 59;
+int numOfPixels = 58;
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = pin number (most are valid)
