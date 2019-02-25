@@ -2,7 +2,7 @@
 #include <Wire.h>
 
 #define PIN 3
-int numOfPixels = 58;
+int numOfPixels = 59;
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = pin number (most are valid)
@@ -56,8 +56,13 @@ void loop()
   {
     turnEnforcersPlain();
   }
+
+  if (message == 'a') //mainA - align green light
+  {
+    turnGreen();
+  }
   
-  if (message == 'n') //mainA - off
+  if (message == 'n') //mainStart - off
   {
     turnOff();
   }  
@@ -101,6 +106,15 @@ void turnEnforcersPlain()
     strip.setPixelColor(i, 229, 187, 0);
     strip.show();
     strip.setPixelColor(i+1, 7, 16, 99);
+    strip.show();
+  }
+}
+
+void turnGreen()
+{
+  for(int i = 0; i <= numOfPixels; i++)
+  {
+    strip.setPixelColor(i, 0, 255, 0);
     strip.show();
   }
 }
