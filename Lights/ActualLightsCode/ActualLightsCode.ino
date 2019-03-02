@@ -42,27 +42,32 @@ void loop()
   //when the roborio sends a message from an input,
   //it will initiate the correct if statement
   
-  if (message == 'c') //mainB - cargo orange flashing
+  if (message == 'c') //button6 - cargo orange flashing
   {    
     turnRGBFlash(255, 40, 0, 'c');
   }
 
-  if (message == 'h') //mainY - hatch panel yellow flashing
+  if (message == 'h') //button5 - hatch panel yellow flashing
   {
     turnRGBFlash(229, 187, 0,'h'); //hatch panel yellow
   }
   
-  if (message == 'f') //mainX - default enforcers
+  if (message == 'f') //button7 - default enforcers
   {
     turnEnforcersPlain();
   }
 
-  if (message == 'a') //mainA - align green light
+  if (message == 'a') //button10 - align green light
   {
     turnGreen();
   }
+
+  if (message == 'r') //button8 - rainbow colors
+  {
+    turnRainbow();
+  }
   
-  if (message == 'n') //mainStart - off
+  if (message == 'n') //button9 - off
   {
     turnOff();
   }  
@@ -104,10 +109,9 @@ void turnEnforcersPlain()
   for(int i = 0; i <= numOfPixels; i = i+2)
   {
     strip.setPixelColor(i, 229, 187, 0);
-    strip.show();
     strip.setPixelColor(i+1, 7, 16, 99);
-    strip.show();
   }
+  strip.show();
 }
 
 void turnGreen()
@@ -115,6 +119,20 @@ void turnGreen()
   for(int i = 0; i <= numOfPixels; i++)
   {
     strip.setPixelColor(i, 0, 255, 0);
-    strip.show();
   }
+  strip.show();
+}
+
+void turnRainbow()
+{
+  for(int i = 0; i <= numOfPixels; i = i+6)
+    {
+      strip.setPixelColor(i, 255, 0, 0);
+      strip.setPixelColor(i+1, 255, 40, 0);
+      strip.setPixelColor(i+2, 255, 255, 0);
+      strip.setPixelColor(i+3, 0, 255, 0);
+      strip.setPixelColor(i+4, 0, 0, 255);
+      strip.setPixelColor(i+5, 128, 0, 255);
+  }
+  strip.show();
 }
