@@ -28,7 +28,22 @@ void loop()
   //get an array of all objects pixy is currently seeing
   //ccc stands for color connected components
   //will only run if blocks has values
-  if (pixy.ccc.getBlocks() > 0 && pixy.ccc.getBlocks() < 3)//updates the blocks[] with the current objects the pixy, returning if it worked (value higher than 0)
+  
+  if (pixy.ccc.getBlocks() == 0 || pixy.ccc.getBlocks == 1)//when not enough objects are recongnized 
+  {
+    val = 316;//to be sent when no objects are detected 
+    valArray[1] = val & 0xFF;//same as others 
+    valArray[0] = (val >> 8) & 0xFF;
+  }
+
+  if (pixy.ccc.getBlocks() == 3)//when three objects are detected
+  {
+    val = 317;//to be sent when three objects are detected 
+    valArray[1] = val & 0xFF;//same as others 
+    valArray[0] = (val >> 8) & 0xFF;
+  }
+    
+  if (pixy.ccc.getBlocks() > 0 && pixy.ccc.getBlocks() =< 3)//updates the blocks[] with the current objects the pixy, returning if it worked (value higher than 0)
   {
         //sends first x value 
         val = pixy.ccc.blocks[0].m_x;//takes x value from 0th position in array from getBlocks();
@@ -52,7 +67,8 @@ void loop()
         Serial.print(" is second x value");
         Serial.println("val 2 = " + val);
   }
-  
+
+  /*//old soln, commented out for now to test
   else
   {
     val = 316;//if no objects are recongnized, sends 316 (is out of range)
@@ -60,5 +76,5 @@ void loop()
     valArray[1] = val & 0xFF;//same as above 
     valArray[0] = (val >> 8) & 0xFF;
   }
-  
+  */
 }
