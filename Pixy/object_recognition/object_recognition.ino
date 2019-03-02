@@ -28,7 +28,7 @@ void loop()
   //get an array of all objects pixy is currently seeing
   //ccc stands for color connected components
   //will only run if blocks has values
-  if (pixy.ccc.getBlocks() > 0)//updates the blocks[] with the current objects the pixy, returning if it worked (value higher than 0)
+  if (pixy.ccc.getBlocks() > 0 && pixy.ccc.getBlocks() < 3)//updates the blocks[] with the current objects the pixy, returning if it worked (value higher than 0)
   {
         //sends first x value 
         val = pixy.ccc.blocks[0].m_x;//takes x value from 0th position in array from getBlocks();
