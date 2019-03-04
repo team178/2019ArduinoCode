@@ -62,6 +62,11 @@ void loop()
     turnGreen();
   }
 
+  if (message == 'x') //turn red to signal that we can't align
+  {
+    turnRed();
+  }
+
   if (message == 'r') //button8 - rainbow colors
   {
     turnRainbow();
@@ -119,6 +124,15 @@ void turnGreen()
   for(int i = 0; i <= numOfPixels; i++)
   {
     strip.setPixelColor(i, 0, 255, 0);
+  }
+  strip.show();
+}
+
+void turnRed()
+{
+  for(int i = 0; i <= numOfPixels; i++)
+  {
+    strip.setPixelColor(i, 255, 0, 0);
   }
   strip.show();
 }
