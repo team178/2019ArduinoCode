@@ -12,7 +12,7 @@ void setup()
   Serial.println("Starting...");
   Wire.onRequest(requestEvent);//is essentially a definition, what to do when the roboRIO asks for data
   pixy.init();
-  pixy.setCameraBrightness(16);
+  pixy.setCameraBrightness(10);
 }
 
 void requestEvent()//handler for onRequest method
@@ -29,17 +29,18 @@ void loop()
   //ccc stands for color connected components
   //will only run if blocks has values
   pixy.ccc.blocks[0].print();
-  String s1 = Serial.read();
+  char c1 = Serial.read();
   pixy.ccc.blocks[1].print();
-  String s2 = Serial.read();
+  char c2 = Serial.read();
   int v = 0;
-  if (s1.equals("error: no response") || s2.equals("error: no response")) {
-    valArray[5] = 0;
-    valArray[4] = 0;
+  if (c1 == 'e' || c2 == 'e') {
+    v = 0;
+    valArray[5] = v & 0xFF;
+    valArray[4] = (v >> 8) & 0xFF;
   } else {
     v = 1 + pixy.ccc.getBlocks();
     valArray[5] = v & 0xFF;
-    valArray[4] = (v >> 8) & 0xFF
+    valArray[4] = (v >> 8) & 0xFF;
   }
         //sends first x value
       val = pixy.ccc.blocks[0].m_x;//takes x value from 0th position in array from getBlocks();
