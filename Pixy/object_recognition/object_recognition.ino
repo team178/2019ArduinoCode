@@ -3,7 +3,7 @@
 
 Pixy2 pixy;  
 int32_t val;//used to take data from pixy
-byte valArray[4];//to send to roboRIO
+byte valArray[6];//to send to roboRIO
 
 void setup() 
 {
@@ -17,7 +17,7 @@ void setup()
 
 void requestEvent()//handler for onRequest method
 {
-  Wire.write(valArray, 4);//sending four bytes, two bytes for each 
+  Wire.write(valArray, 6);//sending six bytes, two bytes for each 
 }
 
 void loop() 
@@ -28,49 +28,38 @@ void loop()
   //get an array of all objects pixy is currently seeing
   //ccc stands for color connected components
   //will only run if blocks has values
-  
-  if (pixy.ccc.getBlocks() == 0 || pixy.ccc.getBlocks() == 1)//when not enough objects are recongnized 
-  {
-    val = 316;//to be sent when no objects are detected 
-    valArray[1] = val & 0xFF;//same as others 
-    valArray[0] = (val >> 8) & 0xFF;
-  } else if (pixy.ccc.getBlocks() == 3)//when three objects are detected
-  {
-    val = 317;//to be sent when three objects are detected 
-    valArray[1] = val & 0xFF;//same as others 
-    valArray[0] = (val >> 8) & 0xFF;
-  } else if (pixy.ccc.getBlocks() == 2)//updates the blocks[] with the current objects the pixy, returning if it worked (value higher than 0)
-  {
+  pixy.ccc.blocks[0].print();
+  String s1 = Serial.read();
+  pixy.ccc.blocks[1].print();
+  String s2 = Serial.read();
+  int v = 0;
+  if (s1.equals("error: no response") || s2.equals("error: no response")) {
+    valArray[5] = 0;
+    valArray[4] = 0;
+  } else {
+    v = 1 + pixy.ccc.getBlocks();
+    valArray[5] = v & 0xFF;
+    valArray[4] = (v >> 8) & 0xFF
+  }
         //sends first x value
-        val = pixy.ccc.blocks[0].m_x;//takes x value from 0th position in array from getBlocks();
-        pixy.ccc.blocks[0].print();//prints data about the block, like it literally prints all of the info 
-        delay(100);
-        valArray[1] = val & 0xFF;//shifts byte over, then bitwise and, essentially to be able to send the values
-        valArray[0] = (val >> 8) & 0xFF;
-        /*Serial.print(valArray[0]);
-        Serial.print(valArray[1]);
-        Serial.print(" is first x value");
-        Serial.println("val 1 = " + val);*/
+      val = pixy.ccc.blocks[0].m_x;//takes x value from 0th position in array from getBlocks();
+      pixy.ccc.blocks[0].print();//prints data about the block, like it literally prints all of the info 
+      delay(100);
+      valArray[1] = val & 0xFF;//shifts byte over, then bitwise and, essentially to be able to send the values
+      valArray[0] = (val >> 8) & 0xFF;
+      /*Serial.print(valArray[0]);
+      Serial.print(valArray[1]);
+      Serial.print(" is first x value");
+      Serial.println("val 1 = " + val);*/
+      //sends second x value 
+      val = pixy.ccc.blocks[1].m_x;
+      pixy.ccc.blocks[1].print();//see above
+      delay(100);
+      valArray[3] = val & 0xFF;//same as above
+      valArray[2] = (val >> 8) & 0xFF;
+      /*Serial.print(valArray[2]);
+      Serial.print(valArray[3]);
+      Serial.print(" is second x value");
+      Serial.println("val 2 = " + val);*/
 
-        //sends second x value 
-        val = pixy.ccc.blocks[1].m_x;
-        pixy.ccc.blocks[1].print();//see above
-        delay(100);
-        valArray[3] = val & 0xFF;//same as above
-        valArray[2] = (val >> 8) & 0xFF;
-        /*Serial.print(valArray[2]);
-        Serial.print(valArray[3]);
-        Serial.print(" is second x value");
-        Serial.println("val 2 = " + val);*/
-  }
-
-  /*//old soln, commented out for now to test
-  else
-  {
-    val = 316;//if no objects are recongnized, sends 316 (is out of range)
-    Serial.println("no objects");
-    valArray[1] = val & 0xFF;//same as above 
-    valArray[0] = (val >> 8) & 0xFF;
-  }
-  */
 }
