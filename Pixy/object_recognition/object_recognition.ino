@@ -3,7 +3,15 @@
 
 Pixy2 pixy;  
 int32_t val;//used to take data from pixy
-byte valArray[6];//to send to roboRIO
+byte valArray[8];//to send to roboRIO
+/*
+ * valArray[0] + valArray[1], first x value 
+ * valArray[2] + valArray[3], second x value 
+ * valArray[4] + valArray[5], status of serial communication - 0 if no communication, 1 + number of blocks if works
+ * valArray[6] + valArray[7], status of SPI connection, <0 if no communcation, 0 if works 
+ * 
+ */
+int comms;
 
 void setup() 
 {
@@ -11,13 +19,19 @@ void setup()
   Serial.begin(115200);
   Serial.println("Starting...");
   Wire.onRequest(requestEvent);//is essentially a definition, what to do when the roboRIO asks for data
-  pixy.init();
+  comms = pixy.init();
+
+  //sends status of SPI connection from the pixy to the Arduino 
+  valArray[7] = comms & 0xFF;
+  valArray[6] = (comms >> 8) & 0xFF
+
+  //sets brightness 
   pixy.setCameraBrightness(10);
 }
 
 void requestEvent()//handler for onRequest method
 {
-  Wire.write(valArray, 6);//sending six bytes, two bytes for each 
+  Wire.write(valArray, 8);//sending six bytes, two bytes for each 
 }
 
 void loop() 
@@ -28,12 +42,11 @@ void loop()
   //get an array of all objects pixy is currently seeing
   //ccc stands for color connected components
   //will only run if blocks has values
-  pixy.ccc.blocks[0].print();
-  char c1 = Serial.read();
-  pixy.ccc.blocks[1].print();
-  char c2 = Serial.read();
+
+  //sends status of serial communication 
+  int numBlocks = pixy.ccc.getBlocks();
   int v = 0;
-  if (c1 == 'e' || c2 == 'e') {
+  if (numBlocks == 0) {
     v = 0;
     valArray[5] = v & 0xFF;
     valArray[4] = (v >> 8) & 0xFF;
@@ -42,7 +55,8 @@ void loop()
     valArray[5] = v & 0xFF;
     valArray[4] = (v >> 8) & 0xFF;
   }
-        //sends first x value
+  
+      //sends first x value
       val = pixy.ccc.blocks[0].m_x;//takes x value from 0th position in array from getBlocks();
       pixy.ccc.blocks[0].print();//prints data about the block, like it literally prints all of the info 
       delay(100);
