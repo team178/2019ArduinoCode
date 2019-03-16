@@ -23,7 +23,7 @@ void setup()
 
   //sends status of SPI connection from the pixy to the Arduino 
   valArray[7] = comms & 0xFF;
-  valArray[6] = (comms >> 8) & 0xFF
+  valArray[6] = (comms >> 8) & 0xFF;
 
   //sets brightness 
   pixy.setCameraBrightness(10);
@@ -44,9 +44,8 @@ void loop()
   //will only run if blocks has values
 
   //sends status of serial communication 
-  int numBlocks = pixy.ccc.getBlocks();
   int v = 0;
-  if (numBlocks == 0) {
+  if (pixy.ccc.getBlocks() == 0) {
     v = 0;
     valArray[5] = v & 0xFF;
     valArray[4] = (v >> 8) & 0xFF;
