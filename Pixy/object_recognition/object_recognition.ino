@@ -7,11 +7,13 @@ byte valArray[8];//to send to roboRIO
 /*
  * valArray[0] + valArray[1], first x value 
  * valArray[2] + valArray[3], second x value 
- * valArray[4] + valArray[5], status of serial communication - 0 if no communication, 1 + number of blocks if works
+ * valArray[4] + valArray[5], number of blocks seen
  * valArray[6] + valArray[7], status of SPI connection, <0 if no communcation, 0 if works 
+ * valArray[8] + valArray[9], status of I2C connection, 0 if no work, 1(?) if works
  * 
  */
-int comms;
+int commsSPI;
+int commsI2C;
 
 void setup() 
 {
@@ -19,11 +21,16 @@ void setup()
   Serial.begin(115200);
   Serial.println("Starting...");
   Wire.onRequest(requestEvent);//is essentially a definition, what to do when the roboRIO asks for data
-  comms = pixy.init();
+
+  //sends status of I2C connection (WIP)
+  commsI2C = Wire.write(1);
+  valArray[9] = commsI2C & 0xFF;
+  valArray[8] = (commsI2C >> 8) & 0xFF;
 
   //sends status of SPI connection from the pixy to the Arduino 
-  valArray[7] = comms & 0xFF;
-  valArray[6] = (comms >> 8) & 0xFF;
+  commsSPI = pixy.init();
+  valArray[7] = commsSPI & 0xFF;
+  valArray[6] = (commsSPI >> 8) & 0xFF;
 
   //sets brightness 
   pixy.setCameraBrightness(10);
@@ -43,9 +50,10 @@ void loop()
   //ccc stands for color connected components
   //will only run if blocks has values
 
-  //sends status of serial communication 
+/*
+  //sends the number of blocks seen plus one - zero indicates that there is an error in communication
   int v = 0;
-  if (pixy.ccc.getBlocks() == 0) {
+  if (pixy.ccc.getBlocks() < 0) {
     v = 0;
     valArray[5] = v & 0xFF;
     valArray[4] = (v >> 8) & 0xFF;
@@ -54,6 +62,25 @@ void loop()
     valArray[5] = v & 0xFF;
     valArray[4] = (v >> 8) & 0xFF;
   }
+*/
+
+  //alternative to sending the number of blocks plus one - where zero indicates that there is an error in communication
+  pixy.ccc.getBlocks();
+  pixy.ccc.blocks[0].print();
+  char c1 = Serial.read();
+  pixy.ccc.blocks[1].print();
+  char c2 = Serial.read();
+  int v = 0;
+  if (c1 == 'e' || c2 == 'e') {
+    v = 0;
+    valArray[5] = v & 0xFF;
+    valArray[4] = (v >> 8) & 0xFF;
+  } else {
+    v = 1 + pixy.ccc.getBlocks();
+    valArray[5] = v & 0xFF;
+    valArray[4] = (v >> 8) & 0xFF;
+  }
+  
   
       //sends first x value
       val = pixy.ccc.blocks[0].m_x;//takes x value from 0th position in array from getBlocks();
