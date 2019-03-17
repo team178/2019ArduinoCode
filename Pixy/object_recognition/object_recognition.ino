@@ -3,7 +3,7 @@
 
 Pixy2 pixy;  
 int32_t val;//used to take data from pixy
-byte valArray[8];//to send to roboRIO
+byte valArray[6];//to send to roboRIO
 /*
  * valArray[0] + valArray[1], first x value 
  * valArray[2] + valArray[3], second x value 
@@ -38,7 +38,7 @@ void setup()
 
 void requestEvent()//handler for onRequest method
 {
-  Wire.write(valArray, 8);//sending six bytes, two bytes for each 
+  Wire.write(valArray, 6);//sending six bytes, two bytes for each 
 }
 
 void loop() 
