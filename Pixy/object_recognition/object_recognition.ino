@@ -14,6 +14,7 @@ byte valArray[6];//to send to roboRIO
  */
 int commsSPI;
 int commsI2C;
+int numBlocks;
 
 void setup() 
 {
@@ -24,13 +25,13 @@ void setup()
 
   //sends status of I2C connection (WIP)
   commsI2C = Wire.write(1);
-  valArray[9] = commsI2C & 0xFF;
-  valArray[8] = (commsI2C >> 8) & 0xFF;
+  //valArray[9] = commsI2C & 0xFF;
+  //valArray[8] = (commsI2C >> 8) & 0xFF;
 
   //sends status of SPI connection from the pixy to the Arduino 
   commsSPI = pixy.init();
-  valArray[7] = commsSPI & 0xFF;
-  valArray[6] = (commsSPI >> 8) & 0xFF;
+  //valArray[7] = commsSPI & 0xFF;
+  //valArray[6] = (commsSPI >> 8) & 0xFF;
 
   //sets brightness 
   pixy.setCameraBrightness(10);
@@ -65,7 +66,8 @@ void loop()
 */
 
   //alternative to sending the number of blocks plus one - where zero indicates that there is an error in communication
-  pixy.ccc.getBlocks();
+  
+  numBlocks = pixy.ccc.getBlocks();
   pixy.ccc.blocks[0].print();
   char c1 = Serial.read();
   pixy.ccc.blocks[1].print();
@@ -76,7 +78,7 @@ void loop()
     valArray[5] = v & 0xFF;
     valArray[4] = (v >> 8) & 0xFF;
   } else {
-    v = 1 + pixy.ccc.getBlocks();
+    v = 1 + numBlocks;
     valArray[5] = v & 0xFF;
     valArray[4] = (v >> 8) & 0xFF;
   }
