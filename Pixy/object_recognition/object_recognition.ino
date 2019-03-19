@@ -23,8 +23,8 @@ void setup()
   Serial.println("Starting...");
   Wire.onRequest(requestEvent);//is essentially a definition, what to do when the roboRIO asks for data
 
-  //sends status of I2C connection (WIP)
-  commsI2C = Wire.write(1);
+  //sends status of I2C connection (WIP) - just realized this won't actually work lol 
+  //commsI2C = Wire.write(1);
   //valArray[9] = commsI2C & 0xFF;
   //valArray[8] = (commsI2C >> 8) & 0xFF;
 
