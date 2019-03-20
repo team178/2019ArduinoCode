@@ -29,9 +29,12 @@ void setup()
   //valArray[8] = (commsI2C >> 8) & 0xFF;
 
   //sends status of SPI connection from the pixy to the Arduino 
-  commsSPI = pixy.init();
+  //commsSPI = pixy.init();
   //valArray[7] = commsSPI & 0xFF;
   //valArray[6] = (commsSPI >> 8) & 0xFF;
+
+  //starts pixy 
+  pixy.init();
 
   //sets brightness 
   pixy.setCameraBrightness(10);
@@ -66,7 +69,6 @@ void loop()
 */
 
   //alternative to sending the number of blocks plus one - where zero indicates that there is an error in communication
-  
   numBlocks = pixy.ccc.getBlocks();
   pixy.ccc.blocks[0].print();
   char c1 = Serial.read();
@@ -84,25 +86,26 @@ void loop()
   }
   
   
-      //sends first x value
-      val = pixy.ccc.blocks[0].m_x;//takes x value from 0th position in array from getBlocks();
-      pixy.ccc.blocks[0].print();//prints data about the block, like it literally prints all of the info 
-      delay(100);
-      valArray[1] = val & 0xFF;//shifts byte over, then bitwise and, essentially to be able to send the values
-      valArray[0] = (val >> 8) & 0xFF;
-      /*Serial.print(valArray[0]);
-      Serial.print(valArray[1]);
-      Serial.print(" is first x value");
-      Serial.println("val 1 = " + val);*/
-      //sends second x value 
-      val = pixy.ccc.blocks[1].m_x;
-      pixy.ccc.blocks[1].print();//see above
-      delay(100);
-      valArray[3] = val & 0xFF;//same as above
-      valArray[2] = (val >> 8) & 0xFF;
-      /*Serial.print(valArray[2]);
-      Serial.print(valArray[3]);
-      Serial.print(" is second x value");
-      Serial.println("val 2 = " + val);*/
+    //sends first x value
+    val = pixy.ccc.blocks[0].m_x;//takes x value from 0th position in array from getBlocks();
+    pixy.ccc.blocks[0].print();//prints data about the block, like it literally prints all of the info 
+    delay(100);
+    valArray[1] = val & 0xFF;//shifts byte over, then bitwise and, essentially to be able to send the values
+    valArray[0] = (val >> 8) & 0xFF;
+    /*Serial.print(valArray[0]);
+    Serial.print(valArray[1]);
+    Serial.print(" is first x value");
+    Serial.println("val 1 = " + val);*/
+      
+    //sends second x value 
+    val = pixy.ccc.blocks[1].m_x;
+    pixy.ccc.blocks[1].print();//see above
+    delay(100);
+    valArray[3] = val & 0xFF;//same as above
+    valArray[2] = (val >> 8) & 0xFF;
+    /*Serial.print(valArray[2]);
+    Serial.print(valArray[3]);
+    Serial.print(" is second x value");
+    Serial.println("val 2 = " + val);*/
 
 }
