@@ -14,7 +14,6 @@ int numOfPixels = 59;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(numOfPixels, PIN, NEO_GRB + NEO_KHZ800);
 char message;
 
-
 void setup()
 {
   turnOff();//turns lights off
@@ -41,6 +40,7 @@ void loop()
 {
   //when the roborio sends a message from an input,
   //it will initiate the correct if statement
+  
   
   if (message == 'c') //button6 - cargo orange flashing
   {    
@@ -69,13 +69,13 @@ void loop()
 
   if (message == 'r') //button8 - rainbow colors
   {
-    turnRainbow();
+    turnRainbowPlain();
   }
   
   if (message == 'n') //button9 - off
   {
     turnOff();
-  }  
+  }
 }
 
 
@@ -137,10 +137,9 @@ void turnRed()
   strip.show();
 }
 
-void turnRainbow()
+void turnRainbowPlain()
 {
-  for(int i = 0; i <= numOfPixels; i = i+6)
-    {
+  for(int i = 0; i <= numOfPixels; i = i+6) {
       strip.setPixelColor(i, 255, 0, 0);
       strip.setPixelColor(i+1, 255, 40, 0);
       strip.setPixelColor(i+2, 255, 255, 0);
