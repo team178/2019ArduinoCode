@@ -42,7 +42,7 @@ void loop()
   //it will initiate the correct if statement
   
   
-  if (message == 'c') //button6 - cargo orange flashing
+  if (message == 'c') //cargo orange flashing to signal we are ready to load cargo; happens when gate open
   {    
     turnRGBFlash(255, 40, 0, 'c');
   }
@@ -60,11 +60,19 @@ void loop()
   if (message == 'a') //button10 - align green light
   {
     turnGreen();
+    //turnRGBSolid(0,255,0,'a');
   }
 
   if (message == 'x') //turn red to signal that we can't align
   {
     turnRed();
+    //turnRGBSolid(255,0,0,'x');
+  }
+
+  if (message == 'o') //button 6 - turn solid orange to signal that we are getting cargo
+  {
+    turnOrange();
+    //turnRGBSolid(255, 40, 0, 'o');
   }
 
   if (message == 'r') //button8 - rainbow colors
@@ -138,6 +146,19 @@ void turnEnforcersPlain()
   strip.show();
 }
 
+void turnRainbowPlain()
+{
+  for(int i = 0; i <= numOfPixels; i = i+6) {
+      strip.setPixelColor(i, 255, 0, 0);
+      strip.setPixelColor(i+1, 255, 40, 0);
+      strip.setPixelColor(i+2, 255, 255, 0);
+      strip.setPixelColor(i+3, 0, 255, 0);
+      strip.setPixelColor(i+4, 0, 0, 255);
+      strip.setPixelColor(i+5, 128, 0, 255);
+  }
+  strip.show();
+}
+
 void turnGreen()
 {
   for(int i = 0; i <= numOfPixels; i++)
@@ -161,19 +182,6 @@ void turnOrange()
   for(int i = 0; i <= numOfPixels; i++)
   {
     strip.setPixelColor(i, 255, 40, 0);
-  }
-  strip.show();
-}
-
-void turnRainbowPlain()
-{
-  for(int i = 0; i <= numOfPixels; i = i+6) {
-      strip.setPixelColor(i, 255, 0, 0);
-      strip.setPixelColor(i+1, 255, 40, 0);
-      strip.setPixelColor(i+2, 255, 255, 0);
-      strip.setPixelColor(i+3, 0, 255, 0);
-      strip.setPixelColor(i+4, 0, 0, 255);
-      strip.setPixelColor(i+5, 128, 0, 255);
   }
   strip.show();
 }
