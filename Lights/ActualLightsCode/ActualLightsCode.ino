@@ -87,6 +87,25 @@ void turnOff()
   strip.show();
 }
 
+void turnRGBSolid(int R, int G, int B, char sent)
+{
+  if(message != sent)
+  {
+    return;
+  }
+  int i = 0;
+  int numbers[3];
+  numbers[3] = new int[3];
+  numbers[0] = R;
+  numbers[1] = G;
+  numbers[2] = B;
+  for(int i = 0; i <= numOfPixels; i++)
+    {
+      strip.setPixelColor(i,R,G,B);        
+    }
+  strip.show();
+}
+
 void turnRGBFlash(int R, int G, int B, char sent)
 {
     if(message != sent)
@@ -133,6 +152,15 @@ void turnRed()
   for(int i = 0; i <= numOfPixels; i++)
   {
     strip.setPixelColor(i, 255, 0, 0);
+  }
+  strip.show();
+}
+
+void turnOrange()
+{
+  for(int i = 0; i <= numOfPixels; i++)
+  {
+    strip.setPixelColor(i, 255, 40, 0);
   }
   strip.show();
 }
