@@ -86,12 +86,12 @@ void loop()
 
   if (message == 'd') //alliance color - blue 
   {
-    turnBlue();
+    turnChaseBlue();
   }
 
   if(message == 's')//alliance color - red
   {
-    turnRed();
+    turnSkipRed();
   }
 }
 
@@ -202,4 +202,63 @@ void turnBlue()
     strip.setPixelColor(i, 0, 0, 255);
   }
   strip.show();
+}
+
+void turnChaseRed()
+{
+   for (int i=numOfPixels; i > 0; i--){
+    for(int x= 0; x <=numOfPixels; x+=5){
+      strip.setPixelColor(i+x,255,0,0);
+      strip.setPixelColor(i+(x-1),255,11,0);
+      strip.setPixelColor(i+(x-2),255,22,0);
+      strip.setPixelColor(i+(x-3),255,44,0);
+      strip.setPixelColor(i+(x-4),255,69,0);   
+  
+      strip.setPixelColor(i-x,255,0,0);
+      strip.setPixelColor(i-(x+1),255,11,0);
+      strip.setPixelColor(i-(x+2),255,22,0);
+      strip.setPixelColor(i-(x+3),255,44,0);
+      strip.setPixelColor(i-(x+4),255,69,0);
+      
+    } 
+    strip.show();
+    delay(100);
+  }
+}
+
+
+void turnChaseBlue()
+{
+  for (int i=numOfPixels; i > 0; i--){
+    for(int x= 0; x <=numOfPixels; x+=3){
+      strip.setPixelColor(i+x,0,0,255);
+      strip.setPixelColor(i+(x-1),0,0,255);
+      strip.setPixelColor(i+(x-2),0,200,255);
+  
+      strip.setPixelColor(i-x,0,0,255);
+      strip.setPixelColor(i-(x+1),0,0,255);
+      strip.setPixelColor(i-(x+2),0,200,255);
+    } 
+    strip.show();
+    delay(100);
+  }
+}
+
+void turnSkipRed()
+{
+    for(int i=10; i > 0; i--){
+        for(int x= 0; x <= 37; x+=4){
+          strip.setPixelColor(i+x,255,0,0);//red
+          strip.setPixelColor(i+(x-1),0,0,0);//blank
+          strip.setPixelColor(i+(x-2),255,0,0);//red
+          strip.setPixelColor(i+(x-3),0,0,0);//blank
+          
+          strip.setPixelColor(i-x,255,0,0);//red
+          strip.setPixelColor(i+(x-1),0,0,0);//blank
+          strip.setPixelColor(i-(x+2),255,20,0);//red
+          strip.setPixelColor(i+(x-3),0,0,0);//blank
+          strip.show();
+          delay(100);
+        }
+    }
 }
