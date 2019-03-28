@@ -41,7 +41,6 @@ void loop()
   //when the roborio sends a message from an input,
   //it will initiate the correct if statement
   
-  
   if (message == 'c') //cargo orange flashing to signal we are ready to load cargo; happens when gate open
   {    
     turnRGBFlash(255, 40, 0, 'c');
@@ -83,6 +82,16 @@ void loop()
   if (message == 'n') //button9 - off
   {
     turnOff();
+  }
+
+  if (message == 'd') //alliance color - blue 
+  {
+    turnBlue();
+  }
+
+  if(message == 's')//alliance color - red
+  {
+    turnRed();
   }
 }
 
@@ -182,6 +191,15 @@ void turnOrange()
   for(int i = 0; i <= numOfPixels; i++)
   {
     strip.setPixelColor(i, 255, 40, 0);
+  }
+  strip.show();
+}
+
+void turnBlue()
+{
+  for(int i = 0; i <= numOfPixels; i++)
+   {
+    strip.setPixelColor(i, 0, 0, 255);
   }
   strip.show();
 }
