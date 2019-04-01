@@ -4,6 +4,10 @@
 #define PIN 3
 int numOfPixels = 59;
 
+uint32_t BLUE1;
+uint32_t BLUE2;
+uint32_t BLUE3;
+
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = pin number (most are valid)
 // Parameter 3 = pixel type flags, add together as needed:
@@ -13,9 +17,13 @@ int numOfPixels = 59;
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(numOfPixels, PIN, NEO_GRB + NEO_KHZ800);
 char message;
+int frame = 0;
+
+
 
 void setup()
 {
+  BLUE1 = strip.Color(0,0,255);
   turnOff();//turns lights off
   Wire.begin(7); //change to 7
   Wire.onReceive(readRoborioMessage); //is essentially a definition, calls the handler to be run when the roboRIO sends a message
@@ -24,6 +32,7 @@ void setup()
   strip.setBrightness(50);
   strip.show(); // Initialize all pixels to 'off'
   Serial.println("Starting...");
+  strip.setPixelColor(1, BLUE1);
 }
 
 void readRoborioMessage()
@@ -53,7 +62,7 @@ void loop()
   
   if (message == 'f') //button7 - default enforcers
   {
-    turnEnforcersPlain();
+    turnEnforcers();
   }
 
   if (message == 'a') //button10 - align green light
@@ -91,8 +100,9 @@ void loop()
 
   if(message == 's')//alliance color - red
   {
-    turnSkipRed();
+    turnChaseRed();
   }
+  frame++;
 }
 
 
@@ -155,6 +165,35 @@ void turnEnforcersPlain()
   strip.show();
 }
 
+void turnEnforcers()
+{
+  for (int i = numOfPixels; i >= 0; i--){
+    if (frame % 2 == 0){
+      if (i % 3 == 0){
+        strip.setPixelColor(i,229, 187, 0);
+      }
+      if (i % 3 == 1) {
+        strip.setPixelColor(i,7, 16, 99); 
+      }
+      if ( i % 3 == 2){
+        strip.setPixelColor(i,229, 187, 0);
+      }  
+    } else if (frame % 2 == 1) {
+      if (i % 3 == 0){
+        strip.setPixelColor(i,7, 16, 99);      
+      }
+      if (i % 3 == 1) {
+        strip.setPixelColor(i,229, 187, 0);
+      }
+      if ( i % 3 == 2){
+        strip.setPixelColor(i,7, 16, 99); 
+      }   
+    }
+  }
+    strip.show();
+    delay(100);
+}
+
 void turnRainbowPlain()
 {
   for(int i = 0; i <= numOfPixels; i = i+6) {
@@ -206,59 +245,59 @@ void turnBlue()
 
 void turnChaseRed()
 {
-   for (int i=numOfPixels; i > 0; i--){
-    for(int x= 0; x <=numOfPixels; x+=5){
-      strip.setPixelColor(i+x,255,0,0);
-      strip.setPixelColor(i+(x-1),255,11,0);
-      strip.setPixelColor(i+(x-2),255,22,0);
-      strip.setPixelColor(i+(x-3),255,44,0);
-      strip.setPixelColor(i+(x-4),255,69,0);   
-  
-      strip.setPixelColor(i-x,255,0,0);
-      strip.setPixelColor(i-(x+1),255,11,0);
-      strip.setPixelColor(i-(x+2),255,22,0);
-      strip.setPixelColor(i-(x+3),255,44,0);
-      strip.setPixelColor(i-(x+4),255,69,0);
-      
-    } 
+   for (int i = numOfPixels; i >= 0; i--){
+    if (frame % 2 == 0){
+      if (i % 3 == 0){
+        strip.setPixelColor(i,255,0,0);
+      }
+      if (i % 3 == 1) {
+        strip.setPixelColor(i,255,50,0); 
+      }
+      if ( i % 3 == 2){
+        strip.setPixelColor(i,178,0,0);
+      }  
+    } else if (frame % 2 == 1) {
+      if (i % 3 == 0){
+        strip.setPixelColor(i,178,0,0);      
+      }
+      if (i % 3 == 1) {
+        strip.setPixelColor(i,255,0,0);
+      }
+      if ( i % 3 == 2){
+        strip.setPixelColor(i,255,50,0); 
+      }   
+    }
+  }
     strip.show();
     delay(100);
-  }
 }
 
 
 void turnChaseBlue()
 {
-  for (int i=numOfPixels; i > 0; i--){
-    for(int x= 0; x <=numOfPixels; x+=3){
-      strip.setPixelColor(i+x,0,0,255);
-      strip.setPixelColor(i+(x-1),0,0,255);
-      strip.setPixelColor(i+(x-2),0,200,255);
-  
-      strip.setPixelColor(i-x,0,0,255);
-      strip.setPixelColor(i-(x+1),0,0,255);
-      strip.setPixelColor(i-(x+2),0,200,255);
-    } 
+  for (int i = numOfPixels; i >= 0; i--){
+    if (frame % 2 == 0){
+      if (i % 3 == 0){
+        strip.setPixelColor(i,0,0,255);
+      }
+      if (i % 3 == 1) {
+        strip.setPixelColor(i,0,200,255); 
+      }
+      if ( i % 3 == 2){
+        strip.setPixelColor(i,0,0,178);
+      }  
+    } else if (frame % 2 == 1) {
+      if (i % 3 == 0){
+        strip.setPixelColor(i,0,0,178);        
+      }
+      if (i % 3 == 1) {
+        strip.setPixelColor(i,0,0,255);
+      }
+      if ( i % 3 == 2){
+        strip.setPixelColor(i,0,200,255); 
+      }   
+    }
+  }
     strip.show();
     delay(100);
-  }
-}
-
-void turnSkipRed()
-{
-    for(int i=10; i > 0; i--){
-        for(int x= 0; x <= 37; x+=4){
-          strip.setPixelColor(i+x,255,0,0);//red
-          strip.setPixelColor(i+(x-1),0,0,0);//blank
-          strip.setPixelColor(i+(x-2),255,0,0);//red
-          strip.setPixelColor(i+(x-3),0,0,0);//blank
-          
-          strip.setPixelColor(i-x,255,0,0);//red
-          strip.setPixelColor(i+(x-1),0,0,0);//blank
-          strip.setPixelColor(i-(x+2),255,20,0);//red
-          strip.setPixelColor(i+(x-3),0,0,0);//blank
-          strip.show();
-          delay(100);
-        }
-    }
 }
