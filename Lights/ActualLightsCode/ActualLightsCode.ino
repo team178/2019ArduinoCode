@@ -67,25 +67,22 @@ void loop()
 
   if (message == 'a') //button10 - align green light
   {
-    turnGreen();
-    //turnRGBSolid(0,255,0,'a');
+    turnRGBSolid(0,255,0,'a');
   }
 
   if (message == 'x') //turn red to signal that we can't align
   {
-    turnRed();
-    //turnRGBSolid(255,0,0,'x');
+    turnRGBSolid(255,0,0,'x');
   }
 
   if (message == 'o') //button 6 - turn solid orange to signal that we are getting cargo
   {
-    turnOrange();
-    //turnRGBSolid(255, 40, 0, 'o');
+    turnRGBSolid(255, 40, 0, 'o');
   }
 
   if (message == 'r') //button8 - rainbow colors
   {
-    turnRainbowPlain();
+    turnRainbow();
   }
   
   if (message == 'n') //button9 - off
@@ -207,40 +204,51 @@ void turnRainbowPlain()
   strip.show();
 }
 
-void turnGreen()
+void turnRainbow()
 {
-  for(int i = 0; i <= numOfPixels; i++)
-  {
-    strip.setPixelColor(i, 0, 255, 0);
+  for (int i = numOfPixels; i >= 0; i--){
+    if (frame % 2 == 0){
+      if (i % 6 == 0){
+        strip.setPixelColor(i,255, 0, 0);
+      }
+      if (i % 6 == 1) {
+        strip.setPixelColor(i,255,40,0); 
+      }
+      if (i % 6 == 2){
+        strip.setPixelColor(i,255, 255, 0);
+      }
+      if (i % 6 == 3){
+        strip.setPixelColor(i,0,255, 0);
+      }  
+      if (i % 6 == 4){
+        strip.setPixelColor(i,0,0,255);
+      }  
+      if (i % 6 == 5){
+        strip.setPixelColor(i,128,0,255);
+      }    
+    } else if (frame % 2 == 1) {
+      if (i % 6 == 1){
+        strip.setPixelColor(i,255, 0, 0);
+      }
+      if (i % 6 == 2) {
+        strip.setPixelColor(i,255,40,0); 
+      }
+      if (i % 6 == 3){
+        strip.setPixelColor(i,255, 255, 0);
+      }
+      if (i % 6 == 4){
+        strip.setPixelColor(i,0,255, 0);
+      }  
+      if (i % 6 == 5){
+        strip.setPixelColor(i,0,0,255);
+      }  
+      if (i % 6 == 0){
+        strip.setPixelColor(i,128,0,255);
+      }    
+    }
   }
-  strip.show();
-}
-
-void turnRed()
-{
-  for(int i = 0; i <= numOfPixels; i++)
-  {
-    strip.setPixelColor(i, 255, 0, 0);
-  }
-  strip.show();
-}
-
-void turnOrange()
-{
-  for(int i = 0; i <= numOfPixels; i++)
-  {
-    strip.setPixelColor(i, 255, 40, 0);
-  }
-  strip.show();
-}
-
-void turnBlue()
-{
-  for(int i = 0; i <= numOfPixels; i++)
-   {
-    strip.setPixelColor(i, 0, 0, 255);
-  }
-  strip.show();
+    strip.show();
+    delay(100);
 }
 
 void turnChaseRed()
